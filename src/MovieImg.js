@@ -8,7 +8,7 @@ const MovieImg = (props) => {
     }
     return (
     <div className="col-lg-3 col-sm-12 col-md-12 p-0">
-        <img src={link + props.movieImagePath} className="img-fluid" style={imgStyle} />
+        <img src={link + props.movieImagePath} className="img-fluid" style={imgStyle} alt="Movie Poster" />
     </div>
     )
 }

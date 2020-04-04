@@ -11,16 +11,19 @@ class App extends Component {
       movies : []
     }
   }
-  componentWillMount() {
-    axios('https://api.themoviedb.org/4/list/138364?page=1&api_key=9028a69bcecf6d4197cb7d920ae88751')
+  getMovies()  {
+    const apiLink = 'https://api.themoviedb.org/4/list/138364?page=1&api_key=9028a69bcecf6d4197cb7d920ae88751'
+    axios(apiLink)
     .then((result) => {
       this.setState({
         movies : result.data.results
       });
-      console.log(result.data.results)
     }).catch((err) => {
       console.log(err);
     });
+  }
+  componentWillMount() {
+    this.getMovies('');
   }
   componentDidMount(){
     document.title = "React Movies"
