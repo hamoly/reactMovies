@@ -1,10 +1,10 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
 
-const ShowMsg = (props) => {
+const ShowMsg = ({msg}) => {
+    
     return (
         <p className="text-warning mt-5 text-center">
-            {props.msg}
+            {msg}
         </p>
     )
 }
