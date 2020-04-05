@@ -1,54 +1,92 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Movie from './Movie.js';
-import ShowMsg from './ShowMsg.js';
-import 'bootstrap/dist/css/bootstrap.css';
+import MovieListApp from './components/movie';
+import ShowMsg from './components/showmsg';
+import Search from './components/search';
 
 class App extends Component {
   constructor(props) {
     super(props)
     // state
     this.state = {
-      movies : [],
-      loading : false
+      error : null,
+      isLoaded : false,
+      movies : []
+      
     }
   }
-  getMovies()  {
-    axios('https://api.themoviedb.org/4/list/138364?page=1&api_key=9028a69bcecf6d4197cb7d920ae88751')
+  getMovies(link)  {
+    axios.get(link)
     .then((result) => {
       this.setState({
+        query: '',
         movies : result.data.results,
-        loading : true
+        isLoaded : true
       });
-    }).catch((err) => {
+    }).catch((error) => {
       this.setState({
-        loading : false
+        isLoaded : true,
+        error
       })
     });
   }
-  componentWillMount() {
-    this.getMovies();
-  }
   componentDidMount(){
-    document.title = "React Movies"
+    this.getMovies(`https://api.themoviedb.org/4/list/138364?page=1&api_key=${process.env.REACT_APP_MOVIE_API_KEY}`);
   }
-  
-  render() {
-    return (
-      <div className="App bg-dark">
-      <div className="container">
 
-       {this.state.loading ?
-        this.state.movies.map(movie => (
-          <>
-        <Movie key={movie.id} poster_path={movie.poster_path} title={movie.title} release_date={movie.release_date} overview={movie.overview} popularity={movie.popularity} vote_count={movie.vote_count} />
-        <hr />
-        </>
-        )) : <ShowMsg msg='Please wait while fetching movies ...' />}
-        </div>
-      </div>
+  handleInputChange = () => {
+    this.setState({
+      query: this.search.value
+    }, () => {
+      if (this.state.query && this.state.query.length > 1) {
+        if (this.state.query.length % 2 === 0) {
+          this.getMovies(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&query=${this.state.query}`)
+          console.log(this.state.query)
+        }
+      } else {
+        this.setState({
+          query : ''
+        })
+        this.getMovies(`https://api.themoviedb.org/4/list/138364?page=1&api_key=${process.env.REACT_APP_MOVIE_API_KEY}`);
+
+      } 
+    })
+  }
+  MovieAppRenderer (){
+  const { error, isLoaded, movies } = this.state;
+  if (error) {
+    return (
+      <ShowMsg msg='ERROR : Please check you internet connection then reload the page' />
+    );
+  } else if (!isLoaded) {
+    return (
+      <ShowMsg msg='Please wait while fetching movies ...' />
+    );
+  } else {
+    return (
+      movies.map(movie => (
+          <MovieListApp key={movie.id} poster_path={movie.poster_path} title={movie.title} release_date={movie.release_date} overview={movie.overview} popularity={movie.popularity} vote_count={movie.vote_count} />
+          )) 
     );
   }
 }
+  render() {
+    return (
+      <div className="App">
+        <div className="container">
+        <form>
+        <input
+          className="form-control mt-3 mb-3"
+          placeholder="Search for movies ..."
+          ref={input => this.search = input}
+          onChange={this.handleInputChange}
+        />
+        {this.MovieAppRenderer()}
+      </form>
+        </div>
+      </div>)
+  };
+}
+
 
 export default App;
