@@ -1,92 +1,91 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import MovieListApp from './components/movie';
 import ShowMsg from './components/showmsg';
-import Search from './components/search';
+import Navbar from './components/navbar';
 
-class App extends Component {
-  constructor(props) {
-    super(props)
-    // state
-    this.state = {
-      error : null,
-      isLoaded : false,
-      movies : []
-      
+const App = () => {
+  const [link, setLink] = useState(process.env.REACT_APP_API_FETCH_URL);
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [movies, setMovies] = useState([]);
+  const [query, setQuery] = useState('');
+  const handleChange = (e) => {
+    if(e.target.value !== '') {
+      setQuery(e.target.value);
+      setLink(`${process.env.REACT_APP_API_SEARCH_URL}${e.target.value}`);
+    } else {
+      setLink(process.env.REACT_APP_API_FETCH_URL);
+      setQuery('')
     }
-  }
-  getMovies(link)  {
+  };
+  const MovieAppRenderer = () => {
+    if (error) {
+      return (
+        <ShowMsg msg='ERROR : Please check you internet connection then reload the page' />
+      );
+    } else if (!isLoaded) {
+      return (
+        <ShowMsg msg='Please wait while fetching movies ...' />
+      );
+    } else if (movies.length == 0) {
+      return (
+        <ShowMsg msg="Sorry couldn't find any search results ... please try another title …" />
+      );
+    } else {
+      return (
+        movies.map(movie => (
+            <MovieListApp key={movie.id} poster_path={movie.poster_path} title={movie.title} release_date={movie.release_date} overview={movie.overview} popularity={movie.popularity} vote_count={movie.vote_count} />
+            )) 
+      );
+    }
+}
+  useEffect(() => {
     axios.get(link)
     .then((result) => {
-      this.setState({
-        query: '',
-        movies : result.data.results,
-        isLoaded : true
-      });
+      setError(null)
+      setMovies(result.data.results);
+      console.log(result);
+      setIsLoaded(true);
     }).catch((error) => {
-      this.setState({
-        isLoaded : true,
-        error
-      })
-    });
-  }
-  componentDidMount(){
-    this.getMovies(`https://api.themoviedb.org/4/list/138364?page=1&api_key=${process.env.REACT_APP_MOVIE_API_KEY}`);
-  }
+      setError(error)
+    }); }, [link, query]);
 
-  handleInputChange = () => {
-    this.setState({
-      query: this.search.value
+/*
+  const handleInputChange = () => {
+    setState({
+      query: search.value
     }, () => {
-      if (this.state.query && this.state.query.length > 1) {
-        if (this.state.query.length % 2 === 0) {
-          this.getMovies(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&query=${this.state.query}`)
-          console.log(this.state.query)
+      if (query && query.length > 1) {
+        if (query.length % 2 === 0) {
+          getMovies(`${process.env.REACT_APP_API_SEARCH_URL}${query}`)
+          console.log(query)
         }
       } else {
-        this.setState({
+        setState({
           query : ''
         })
-        this.getMovies(`https://api.themoviedb.org/4/list/138364?page=1&api_key=${process.env.REACT_APP_MOVIE_API_KEY}`);
+        getMovies(`${process.env.REACT_APP_API_FETCH_URL}`);
 
       } 
     })
   }
-  MovieAppRenderer (){
-  const { error, isLoaded, movies } = this.state;
-  if (error) {
-    return (
-      <ShowMsg msg='ERROR : Please check you internet connection then reload the page' />
-    );
-  } else if (!isLoaded) {
-    return (
-      <ShowMsg msg='Please wait while fetching movies ...' />
-    );
-  } else {
-    return (
-      movies.map(movie => (
-          <MovieListApp key={movie.id} poster_path={movie.poster_path} title={movie.title} release_date={movie.release_date} overview={movie.overview} popularity={movie.popularity} vote_count={movie.vote_count} />
-          )) 
-    );
-  }
-}
-  render() {
+
+
+}  */
     return (
       <div className="App">
-        <div className="container">
-        <form>
-        <input
-          className="form-control mt-3 mb-3"
-          placeholder="Search for movies ..."
-          ref={input => this.search = input}
-          onChange={this.handleInputChange}
-        />
-        {this.MovieAppRenderer()}
-      </form>
+      <div className="container-fluid">
+      <Navbar inputValue={query} handleChangeValue={handleChange}/>
+      </div>
+        <div className="container mt-115">
+          <MovieAppRenderer />
         </div>
-      </div>)
-  };
-}
+      </div>
+      )
+    }
+
+    
 
 
 export default App;
