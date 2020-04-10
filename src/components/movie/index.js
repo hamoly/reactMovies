@@ -1,12 +1,24 @@
 import React from 'react';
 import Movie from './movie'
+import ShowMsg from './showmsg';
 
-const MovieListApp = ({...movie}) => {
-    const {poster_path, title, release_date, overview, popularity, vote_count} = movie
-    return (
-    <Movie poster_path={poster_path} title={title} release_date={release_date} overview={overview} popularity={popularity} vote_count={vote_count} />
-    )
+const msgHandler = () => {
+    let msgtxt
 }
 
-
-export default MovieListApp
+MovieAppRenderer (){
+    const { error, isLoaded, movies } = this.state;
+    if (error) {
+      return (
+        <ShowMsg msg='ERROR : Please check you internet connection then reload the page' />
+      );
+    } else if (!isLoaded) {
+      return (
+        <ShowMsg msg='Please wait while fetching movies ...' />
+      );
+    } else {
+      return (
+            <MovieListApp />
+      );
+    }
+  }

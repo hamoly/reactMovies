@@ -11,7 +11,8 @@ class App extends Component {
     this.state = {
       error : null,
       isLoaded : false,
-      movies : []
+      movies : [],
+      favorits: []
       
     }
   }
@@ -52,37 +53,16 @@ class App extends Component {
       } 
     })
   }
-  MovieAppRenderer (){
-  const { error, isLoaded, movies } = this.state;
-  if (error) {
-    return (
-      <ShowMsg msg='ERROR : Please check you internet connection then reload the page' />
-    );
-  } else if (!isLoaded) {
-    return (
-      <ShowMsg msg='Please wait while fetching movies ...' />
-    );
-  } else {
-    return (
-      movies.map(movie => (
-          <MovieListApp key={movie.id} poster_path={movie.poster_path} title={movie.title} release_date={movie.release_date} overview={movie.overview} popularity={movie.popularity} vote_count={movie.vote_count} />
-          )) 
-    );
+  handleFavorits(id) {
+    
   }
-}
+
   render() {
     return (
       <div className="App">
         <div className="container">
-        <form>
-        <input
-          className="form-control mt-3 mb-3"
-          placeholder="Search for movies ..."
-          ref={input => this.search = input}
-          onChange={this.handleInputChange}
-        />
-        {this.MovieAppRenderer()}
-      </form>
+          <Search query={this.handleInputChange}/>
+          <MovieAppRenderer movieArr={this.state.movies}/>
         </div>
       </div>)
   };
