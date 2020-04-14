@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import MovieListRenderer from './components/movie'
-import Favorits from './components/favorits';
 import Navbar from './components/navbar';
 
 class App extends Component {
@@ -12,44 +11,48 @@ class App extends Component {
       error : null,
       isLoaded : false,
       movies : [],
-      favorits: [],
-      query: ''
+      liked: [],
+      query: '',
     }
   }
 
   componentDidMount(){
-    this.getMovies(`${process.env.REACT_APP_MOVIE_API_KEY}`);
+    axios.get(`${process.env.REACT_APP_MOVIE_API_KEY}`)
+      .then((result) => {
+        this.setState({
+          query: '',
+          movies : result.data.results,
+          isLoaded : true
+        });
+      }).catch((error) => {
+        this.setState({
+          isLoaded : false,
+          error
+        })
+      });
   }
   
-  getMovies(link)  {
-    axios.get(link)
-    .then((result) => {
-      this.setState({
-        query: '',
-        movies : result.data.results,
-        isLoaded : true
-      });
-    }).catch((error) => {
-      this.setState({
-        isLoaded : true,
-        error
-      })
-    });
-  }
-
   handleSearch = (e) => {
     this.setState({
       query: e.target.value
     })
   }
 
-  handleFavorits = (e) => {
-    const {favorits} = this.state
-    if(favorits.length === 0 || !favorits.includes(e.target.id)) {
-      this.setState({favorits: [...favorits, e.target.id]})
-      e.target.classList.add('badge-danger')
-      e.target.innerText='Loved'
-      console.log(favorits)
+  handleLiked = (e) => {
+    const {movies, liked} = this.state
+    const {id} = e.target
+    console.log(liked)
+    if(liked.some(fav => fav.id === parseInt(id))) {
+      this.setState({
+        liked: liked.filter(fav => { return fav.id !== parseInt(id)})
+      })
+      document.getElementById(id).classList.remove('badge-danger')
+      document.getElementById(id).value='Like'
+    } else {
+      const favedObject = movies.filter(movie => movie.id === parseInt(id))
+      this.setState({liked: [...liked, ...favedObject]})
+      document.getElementById(id).classList.add('badge-danger')
+      document.getElementById(id).innerText='Liked'
     }
   }
 
@@ -60,12 +63,15 @@ class App extends Component {
           <Navbar query={this.handleSearch} value={this.state.query}/>
         </div>
         <div className="container mt-115">
-          <ul className="list-group list-group-horizontal mb-3">
-            <Favorits fav={this.state.favorits} />
-          </ul>
-          <MovieListRenderer query={this.state.query} movies={this.state.movies} handleFav={this.handleFavorits} error={this.state.error} isLoaded={this.state.isLoaded} />
+        {this.props.display === 'liked'
+          ?
+          <MovieListRenderer query={this.state.query} movies={this.state.liked} handleFav={this.handleLiked} error={this.state.error} isLoaded={this.state.isLoaded} />
+          :
+          <MovieListRenderer query={this.state.query} movies={this.state.movies} handleFav={this.handleLiked} error={this.state.error} isLoaded={this.state.isLoaded} />
+        }
         </div>
-      </div>)
+      </div>
+      )
   };
 }
 
