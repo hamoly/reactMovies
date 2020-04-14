@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import MovieListRenderer from './components/movie'
-import Favorits from './components/favorits';
-import Navbar from './components/navbar';
+import MovieListApp from './components/movie';
+import ShowMsg from './components/showmsg';
+import Search from './components/search';
 
 class App extends Component {
   constructor(props) {
@@ -12,15 +12,10 @@ class App extends Component {
       error : null,
       isLoaded : false,
       movies : [],
-      favorits: [],
-      query: ''
+      favorits: []
+      
     }
   }
-
-  componentDidMount(){
-    this.getMovies(`${process.env.REACT_APP_MOVIE_API_KEY}`);
-  }
-  
   getMovies(link)  {
     axios.get(link)
     .then((result) => {
@@ -36,37 +31,42 @@ class App extends Component {
       })
     });
   }
-
-  handleSearch = (e) => {
-    this.setState({
-      query: e.target.value
-    })
+  componentDidMount(){
+    this.getMovies(`https://api.themoviedb.org/4/list/138364?page=1&api_key=${process.env.REACT_APP_MOVIE_API_KEY}`);
   }
 
-  handleFavorits = (e) => {
-    const {favorits} = this.state
-    if(favorits.length === 0 || !favorits.includes(e.target.id)) {
-      this.setState({favorits: [...favorits, e.target.id]})
-      e.target.classList.add('badge-danger')
-      e.target.innerText='Loved'
-      console.log(favorits)
-    }
+  handleInputChange = () => {
+    this.setState({
+      query: this.search.value
+    }, () => {
+      if (this.state.query && this.state.query.length > 1) {
+        if (this.state.query.length % 2 === 0) {
+          this.getMovies(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MOVIE_API_KEY}&query=${this.state.query}`)
+          console.log(this.state.query)
+        }
+      } else {
+        this.setState({
+          query : ''
+        })
+        this.getMovies(`https://api.themoviedb.org/4/list/138364?page=1&api_key=${process.env.REACT_APP_MOVIE_API_KEY}`);
+
+      } 
+    })
+  }
+  handleFavorits(id) {
+    
   }
 
   render() {
     return (
       <div className="App">
-        <div className="container-fluid">
-          <Navbar query={this.handleSearch} value={this.state.query}/>
-        </div>
-        <div className="container mt-115">
-          <ul className="list-group list-group-horizontal mb-3">
-            <Favorits fav={this.state.favorits} />
-          </ul>
-          <MovieListRenderer query={this.state.query} movies={this.state.movies} handleFav={this.handleFavorits} error={this.state.error} isLoaded={this.state.isLoaded} />
+        <div className="container">
+          <Search query={this.handleInputChange}/>
+          <MovieAppRenderer movieArr={this.state.movies}/>
         </div>
       </div>)
   };
 }
+
 
 export default App;

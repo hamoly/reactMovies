@@ -1,12 +1,16 @@
 import React from 'react';
 import Movie from './movie'
-import ShowMsg from '../showmsg';
+import ShowMsg from './showmsg';
 
-const MovieListRenderer = (props) => {
-    const { error, isLoaded, movies, query, handleFav } = props;
+const msgHandler = () => {
+    let msgtxt
+}
+
+MovieAppRenderer (){
+    const { error, isLoaded, movies } = this.state;
     if (error) {
       return (
-        <ShowMsg msg='ERROR : Please check your internet connection then reload the page' />
+        <ShowMsg msg='ERROR : Please check you internet connection then reload the page' />
       );
     } else if (!isLoaded) {
       return (
@@ -14,9 +18,7 @@ const MovieListRenderer = (props) => {
       );
     } else {
       return (
-          <Movie movie={movies} handleFav={handleFav} query={query} />
+            <MovieListApp />
       );
     }
   }
-
-  export default MovieListRenderer
