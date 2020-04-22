@@ -41,33 +41,35 @@ class App extends Component {
   handleLiked = (e) => {
     const {movies, liked} = this.state
     const {id} = e.target
-    console.log(liked)
     if(liked.some(fav => fav.id === parseInt(id))) {
       this.setState({
         liked: liked.filter(fav => { return fav.id !== parseInt(id)})
       })
-      document.getElementById(id).classList.remove('badge-danger')
-      document.getElementById(id).value='Like'
+      e.target.classList.remove('badge-secondary', 'remove')
+      e.target.classList.add('add')
+      document.getElementById(id).innerText='Like'
     } else {
       const favedObject = movies.filter(movie => movie.id === parseInt(id))
       this.setState({liked: [...liked, ...favedObject]})
-      document.getElementById(id).classList.add('badge-danger')
+      e.target.classList.remove('badge-secondary', 'add')
+      e.target.classList.add('badge-secondary', 'remove')
       document.getElementById(id).innerText='Liked'
     }
   }
 
   render() {
+    const {liked, query, error, isLoaded, movies} = this.state
     return (
       <div className="App">
         <div className="container-fluid">
-          <Navbar query={this.handleSearch} value={this.state.query}/>
+          <Navbar query={this.handleSearch} liked={liked} value={query}/>
         </div>
         <div className="container mt-115">
         {this.props.display === 'liked'
           ?
-          <MovieListRenderer query={this.state.query} movies={this.state.liked} handleFav={this.handleLiked} error={this.state.error} isLoaded={this.state.isLoaded} />
+          <MovieListRenderer query={query} movies={liked} handleFav={this.handleLiked} error={error} isLoaded={isLoaded} />
           :
-          <MovieListRenderer query={this.state.query} movies={this.state.movies} handleFav={this.handleLiked} error={this.state.error} isLoaded={this.state.isLoaded} />
+          <MovieListRenderer query={query} movies={movies} handleFav={this.handleLiked} error={error} isLoaded={isLoaded} />
         }
         </div>
       </div>

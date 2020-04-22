@@ -4,7 +4,7 @@ import Logo from '../logo';
 import { Link, NavLink } from 'react-router-dom';
 
 const Navbar = (props) => {
-  const {query, value} = props
+  const {liked, query, value} = props
     return (
 <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
   <Link className="navbar-brand" to="/">
@@ -21,7 +21,7 @@ const Navbar = (props) => {
         <NavLink className="nav-link" to="/">Browse Movies</NavLink>
       </li>
       <li className="nav-item">
-        <NavLink className="nav-link" to="/liked">Liked Movies</NavLink>
+        <NavLink className="nav-link" to="/liked">Liked Movies<span className="badge badge-danger ml-2">{liked ? liked.length : '0'}</span></NavLink>
       </li>
     </ul>
     <Search query={query} value={value} /> 
