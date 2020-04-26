@@ -38,23 +38,31 @@ class App extends Component {
     })
   }
 
-  handleLiked = (e) => {
+  addToLiked = (e) => {
     const {movies, liked} = this.state
     const {id} = e.target
     if(liked.some(fav => fav.id === parseInt(id))) {
       this.setState({
         liked: liked.filter(fav => { return fav.id !== parseInt(id)})
       })
-      e.target.classList.remove('badge-secondary', 'remove')
-      e.target.classList.add('add')
-      document.getElementById(id).innerText='Like'
+      this.handleLikedBtn(e, 'Like')
     } else {
       const favedObject = movies.filter(movie => movie.id === parseInt(id))
       this.setState({liked: [...liked, ...favedObject]})
-      e.target.classList.remove('badge-secondary', 'add')
-      e.target.classList.add('badge-secondary', 'remove')
-      document.getElementById(id).innerText='Liked'
+      this.handleLikedBtn(e, 'Liked')
     }
+  }
+
+  handleLikedBtn = (e, txt) =>{
+    e.target.classList.remove('btn-secondary', 'add', 'btn-danger', 'remove')
+    document.getElementById(e.target.id).innerText=txt
+
+    txt === 'Liked'
+    ?
+    e.target.classList.add('btn-danger', 'remove')
+    : 
+    e.target.classList.add('btn-secondary', 'add')
+
   }
 
   render() {
@@ -67,9 +75,9 @@ class App extends Component {
         <div className="container mt-115">
         {this.props.display === 'liked'
           ?
-          <MovieListRenderer query={query} movies={liked} handleFav={this.handleLiked} error={error} isLoaded={isLoaded} />
+          <MovieListRenderer query={query} movies={liked} handleFav={this.addToLiked} error={error} isLoaded={isLoaded} />
           :
-          <MovieListRenderer query={query} movies={movies} handleFav={this.handleLiked} error={error} isLoaded={isLoaded} />
+          <MovieListRenderer query={query} movies={movies} handleFav={this.addToLiked} error={error} isLoaded={isLoaded} />
         }
         </div>
       </div>

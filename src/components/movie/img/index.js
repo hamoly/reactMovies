@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react"
+import poster from './movie-poster-na.jpg';
 import styled from "styled-components"
-
-const placeHolder =
-  require('./movie-poster-na.jpg')
 
 const Image = styled.img`
 width:100%;
@@ -22,12 +20,12 @@ height:100%;
   }
   &.has-error {
     // fallback to placeholder image on error
-    content: url(${placeHolder});
+    content: url(${poster});
   }
 `
 
   const LazyImage = ({ src, alt }) => {
-  const [imageSrc, setImageSrc] = useState(placeHolder)
+  const [imageSrc, setImageSrc] = useState(poster)
   const [imageRef, setImageRef] = useState()
 
   const onLoad = event => {

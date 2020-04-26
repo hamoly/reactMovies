@@ -8,7 +8,6 @@ import ShowMsg from '../showmsg';
 
 const Movie = (props) => {
     let {movie, handleFav} = props
-    console.log(props)
     let filteredMovies = movie.filter(movie => {
         return movie.title.toLowerCase().indexOf(
         props.query.toLowerCase()) !== -1 ;
