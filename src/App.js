@@ -13,6 +13,7 @@ class App extends Component {
       movies : [],
       liked: [],
       query: '',
+      filtered: []
     }
   }
 
@@ -20,22 +21,30 @@ class App extends Component {
     axios.get(`${process.env.REACT_APP_MOVIE_API_KEY}`)
       .then((result) => {
         this.setState({
-          query: '',
           movies : result.data.results,
-          isLoaded : true
+          isLoaded : true,
         });
       }).catch((error) => {
         this.setState({
-          isLoaded : false,
           error
         })
       });
   }
   
   handleSearch = (e) => {
+    let {liked, movies} = this.state
+    let searchInput = e.target.value
     this.setState({
-      query: e.target.value
-    })
+      query: searchInput
+    }, function () {
+      let movieList = this.props.display === 'liked' ? liked : movies
+      this.setState({
+        filtered: movieList.filter(movie => {
+          return movie.title.toLowerCase().indexOf(
+          this.state.query.toLowerCase()) !== -1 ;
+        })
+      })
+    });   
   }
 
   addToLiked = (e) => {
@@ -66,18 +75,23 @@ class App extends Component {
   }
 
   render() {
-    const {liked, query, error, isLoaded, movies} = this.state
+    const {liked, error, isLoaded, movies, filtered} = this.state
     return (
       <div className="App">
         <div className="container-fluid">
-          <Navbar query={this.handleSearch} liked={liked} value={query}/>
+          <Navbar query={this.handleSearch} liked={liked}/>
         </div>
         <div className="container mt-115">
-        {this.props.display === 'liked'
+        {filtered.length > 0
           ?
-          <MovieListRenderer query={query} movies={liked} handleFav={this.addToLiked} error={error} isLoaded={isLoaded} />
+          <MovieListRenderer movies={filtered} handleFav={this.addToLiked} error={error} isLoaded={isLoaded} />
           :
-          <MovieListRenderer query={query} movies={movies} handleFav={this.addToLiked} error={error} isLoaded={isLoaded} />
+          (this.props.display === 'liked'
+          ?
+          <MovieListRenderer movies={liked} handleFav={this.addToLiked} error={error} isLoaded={isLoaded} />
+          :
+          <MovieListRenderer movies={movies} handleFav={this.addToLiked} error={error} isLoaded={isLoaded} />
+          )
         }
         </div>
       </div>

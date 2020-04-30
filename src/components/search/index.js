@@ -7,7 +7,7 @@ return (
     <input
       className="form-control mt-3 mb-3"
       placeholder="Search for movies ..."
-      onChange={e => query(e)}
+      onChange={query}
     />
   </form>
     )
