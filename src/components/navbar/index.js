@@ -18,7 +18,7 @@ const Navbar = (props) => {
   <div className="collapse navbar-collapse" id="navbarSupportedContent">
     <ul className="navbar-nav m-auto">
       <li className="nav-item">
-        <NavLink className="nav-link" to="/">Browse Movies</NavLink>
+        <NavLink exact className="nav-link" to="/">Browse Movies</NavLink>
       </li>
       <li className="nav-item">
         <NavLink className="nav-link" to="/liked">Liked Movies<span className="badge badge-danger ml-2">{liked ? liked.length : '0'}</span></NavLink>

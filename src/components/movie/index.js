@@ -8,9 +8,16 @@ const MovieListRenderer = (props) => {
       error ? 
       <ShowMsg msg='ERROR : Please check your internet connection then reload the page' /> 
       :
-      (!isLoaded ? <ShowMsg msg='Please wait while fetching movies ...' />
+      (!isLoaded
+      ?
+      <ShowMsg msg='Please wait while fetching movies ...' />
       :
-      <Movie movie={movies} filter={filter} display={display} handleFav={handleFav} query={query} />)
+      (movies.length > 0 ?
+        <Movie movie={movies} filter={filter} display={display} handleFav={handleFav} query={query} />
+        :
+        <ShowMsg msg='Sorry there are no movies in this list ...' />
+        )
+      )
       )
   }
 

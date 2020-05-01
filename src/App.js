@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import MovieListRenderer from './components/movie'
 import Navbar from './components/navbar';
+import ShowMsg from './components/showmsg';
 
 class App extends Component {
   constructor(props) {
@@ -75,23 +76,27 @@ class App extends Component {
   }
 
   render() {
-    const {liked, error, isLoaded, movies, filtered} = this.state
+    const {liked, error, isLoaded, movies, filtered, query} = this.state
     return (
       <div className="App">
         <div className="container-fluid">
           <Navbar query={this.handleSearch} liked={liked}/>
         </div>
         <div className="container mt-115">
-        {filtered.length > 0
+        {query !== ''
           ?
           <MovieListRenderer movies={filtered} handleFav={this.addToLiked} error={error} isLoaded={isLoaded} />
+          :
+          (filtered.length < 1 && query !== ''
+          ?
+          <ShowMsg msg='No movies found ... Please try another title ...' />
           :
           (this.props.display === 'liked'
           ?
           <MovieListRenderer movies={liked} handleFav={this.addToLiked} error={error} isLoaded={isLoaded} />
           :
           <MovieListRenderer movies={movies} handleFav={this.addToLiked} error={error} isLoaded={isLoaded} />
-          )
+          ))
         }
         </div>
       </div>
