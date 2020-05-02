@@ -1,4 +1,24 @@
+@import 'https://use.fontawesome.com/releases/v5.7.0/css/all.css';
+
 .mt-115 {margin-top: 115px;}
 .st0{fill:#EA0027;width: 50px;height:50px;}
 .st1{fill:#FFFFFF;}
 svg{width:50px;}
+.add::before {
+  margin-right: 5px;
+  content: url('./add.svg');
+  float: left;
+  width: 1em;
+}
+.remove::before {
+    margin-right: 5px;
+    content: url('./remove.svg');
+    float: left;
+    width: 1em;
+}
+.active {
+  background-color: #343a40;
+  border-radius: 5px;
+  color: #fff !important;
+  font-weight: 500;
+}
