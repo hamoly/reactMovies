@@ -5,7 +5,6 @@ import { Link, NavLink } from 'react-router-dom';
 
 const Navbar = (props) => {
   const {liked, query, value, user, handleLogOut} = props
-  console.log(user)
     return (
 <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
   <Link className="navbar-brand" to="/">
