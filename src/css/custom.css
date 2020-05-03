@@ -1,9 +1,11 @@
 @import 'https://use.fontawesome.com/releases/v5.7.0/css/all.css';
 
 .mt-115 {margin-top: 115px;}
+.mt-200 {margin-top: 200px;}
 .st0{fill:#EA0027;width: 50px;height:50px;}
 .st1{fill:#FFFFFF;}
-svg{width:50px;}
+.navbar-brand{width:50px;}
+.brand_logo_container > svg{width:100px;}
 .add::before {
   margin-right: 5px;
   content: url('./add.svg');
@@ -21,4 +23,50 @@ svg{width:50px;}
   border-radius: 5px;
   color: #fff !important;
   font-weight: 500;
+}
+
+/* Login */
+.user_card {
+  height: 400px;
+  width: 350px;
+  margin-top: auto;
+  margin-bottom: auto;
+  background: #ffc107;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+
+}
+.brand_logo_container {
+  position: absolute;
+  height: 150px;
+  width: 150px;
+  top: -125px;
+  border-radius: 50%;
+  padding: 25px;
+  text-align: center;
+}
+
+.form_container {
+  margin-top: 100px;
+}
+.login_btn {
+  width: 100%;
+  margin: 2px;
+}
+.input-group-text {
+  color: white !important;
+  border: 0 !important;
+  border-radius: 0.25rem 0 0 0.25rem !important;
+}
+.input_user,
+.input_pass:focus {
+  box-shadow: none !important;
+  outline: 0px !important;
 }
