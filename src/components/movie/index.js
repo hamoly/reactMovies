@@ -13,7 +13,7 @@ const MovieListRenderer = (props) => {
       <ShowMsg msg='Please wait while fetching movies ...' />
       :
       (movies.length > 0 ?
-        <Movie movie={movies} filter={filter} display={display} handleFav={handleFav} query={query} />
+        <Movie movie={movies}filter={filter} display={display} handleFav={handleFav} query={query} />
         :
         <ShowMsg msg='Sorry there are no movies in this list ...' />
         )
