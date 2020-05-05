@@ -14,24 +14,44 @@ class App extends Component {
       movies : [],
       liked: [],
       query: '',
-      filtered: []
+      filtered: [],
+      pageNumber: 1
     }
   }
 
   componentDidMount(){
-    axios.get(`${process.env.REACT_APP_MOVIE_API_KEY}`)
-      .then((result) => {
-        this.setState({
-          movies : result.data.results,
-          isLoaded : true,
-        });
-      }).catch((error) => {
-        this.setState({
-          error
-        })
-      });
+    this.fetchMovies();
+    document.addEventListener('scroll', this.trackScrolling);
   }
   
+  fetchMovies = () => {
+    axios.get(`${process.env.REACT_APP_MOVIE_API_KEY}${this.state.pageNumber}`)
+    .then((result) => {
+      this.setState({
+        movies : [...this.state.movies, ...result.data.results],
+        isLoaded : true,
+      }, this.incremntPageNumber(result));
+    }).catch((error) => {
+      this.setState({
+        error
+      })
+    });
+  }
+  incremntPageNumber = (result) => {
+    console.log(this.state.movies, result)  
+    this.setState({
+      pageNumber: this.state.pageNumber + 1
+    })
+  }
+  trackScrolling = () => {
+    const wrappedElement = document.getElementById('movies');
+    if(this.isBottom(wrappedElement)) {
+      this.fetchMovies();
+    }
+  };
+  isBottom(el) {
+    return el.getBoundingClientRect().bottom <= window.innerHeight;
+  }
   handleSearch = (e) => {
     let {liked, movies} = this.state
     let searchInput = e.target.value
@@ -82,7 +102,7 @@ class App extends Component {
         <div className="container-fluid">
           <Navbar query={this.handleSearch} liked={liked}/>
         </div>
-        <div className="container mt-115">
+        <div className="container mt-115" id="movies">
         {query !== ''
           ?
           <MovieListRenderer movies={filtered} handleFav={this.addToLiked} error={error} isLoaded={isLoaded} />
