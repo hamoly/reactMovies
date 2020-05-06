@@ -16,6 +16,9 @@ ReactDOM.render(
     <Route path="/liked">
       <App display='liked' />
     </Route>
+    <Route path="/login">
+      <App display='login' />
+    </Route>
     </Switch>
   </Router>
   </React.StrictMode>,

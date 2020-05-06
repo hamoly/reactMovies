@@ -4,11 +4,11 @@ import Logo from '../logo';
 import { Link, NavLink } from 'react-router-dom';
 
 const Navbar = (props) => {
-  const {liked, query, value} = props
+  const {liked, query, value, user, handleLogOut} = props
     return (
 <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
   <Link className="navbar-brand" to="/">
-  <Logo className="d-inline-block" alt="React Movies" />
+  <Logo className="navLogo d-inline-block" alt="React Movies" />
   <span className="pl-2">React Movies</span>
   </Link>
   <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,6 +22,14 @@ const Navbar = (props) => {
       </li>
       <li className="nav-item">
         <NavLink className="nav-link" to="/liked">Liked Movies<span className="badge badge-danger ml-2">{liked ? liked.length : '0'}</span></NavLink>
+      </li>
+      <li className="nav-item">
+      
+        {user ?
+          <Link className="nav-link" to="/" display="mivoes" onClick={handleLogOut}>Logout</Link>
+          :
+          <Link className="nav-link" to="/login">Login</Link>
+        }
       </li>
     </ul>
     <Search query={query} value={value} /> 

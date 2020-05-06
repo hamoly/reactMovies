@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import poster from './movie-poster-na.jpg';
+import poster from './movie-poster-na.6fafb80a.jpg';
 import styled from "styled-components"
 
 const Image = styled.img`

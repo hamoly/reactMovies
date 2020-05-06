@@ -3,42 +3,92 @@ import axios from 'axios';
 import MovieListRenderer from './components/movie'
 import Navbar from './components/navbar';
 import ShowMsg from './components/showmsg';
+import Login from './components/login';
+import fire from './config/'
 
 class App extends Component {
   constructor(props) {
     super(props)
     // state
     this.state = {
+      user: null,
       error : null,
       isLoaded : false,
       movies : [],
       liked: [],
       query: '',
       filtered: [],
-      pageNumber: 1
+      pageNumber: 1,
     }
   }
 
   componentDidMount(){
+    this.authLestiner();
     this.fetchMovies();
     document.addEventListener('scroll', this.trackScrolling);
   }
-  
+  authLestiner = () => {
+    fire.auth().onAuthStateChanged((user) => {
+      user ?
+        this.setState({
+          user
+        })
+      :
+      this.setState({
+        user: null
+      })
+    })
+  }
+  handleLogIn = () => {
+    const email = document.querySelector('#email').value
+    const password = document.querySelector('#password').value
+    fire.auth().signInWithEmailAndPassword(email, password)
+    .then((user) =>{
+      this.setState({
+        user
+      })
+    })
+    .catch((error) =>{
+      console.log(error.toString())
+    })
+  }
+
+  handleSignUp = () => {
+    const email = document.querySelector('#email').value
+    const password = document.querySelector('#password').value
+    fire.auth().createUserWithEmailAndPassword(email, password)
+    .then((user) =>{
+      fire.auth().signInWithEmailAndPassword(user)
+    })
+    .catch((error) =>{
+      console.log(error.toString())
+    })
+  }
+
+  handleLogOut = () => {
+    fire.auth().signOut()
+    .then(() =>{
+      this.setState({
+        user:null
+      })
+    })
+  }
+
   fetchMovies = () => {
     axios.get(`${process.env.REACT_APP_MOVIE_API_KEY}${this.state.pageNumber}`)
     .then((result) => {
       this.setState({
         movies : [...this.state.movies, ...result.data.results],
         isLoaded : true,
-      }, this.incremntPageNumber(result));
+      }, this.incremntPageNumber());
     }).catch((error) => {
       this.setState({
         error
       })
     });
   }
-  incremntPageNumber = (result) => {
-    console.log(this.state.movies, result)  
+
+  incremntPageNumber = () => {
     this.setState({
       pageNumber: this.state.pageNumber + 1
     })
@@ -48,26 +98,28 @@ class App extends Component {
     if(this.isBottom(wrappedElement)) {
       this.fetchMovies();
     }
-  };
+  }
+
   isBottom(el) {
     return el.getBoundingClientRect().bottom <= window.innerHeight;
   }
+
   handleSearch = (e) => {
-    let {liked, movies} = this.state
     let searchInput = e.target.value
     this.setState({
       query: searchInput
-    }, function () {
-      let movieList = this.props.display === 'liked' ? liked : movies
-      this.setState({
-        filtered: movieList.filter(movie => {
-          return movie.title.toLowerCase().indexOf(
-          this.state.query.toLowerCase()) !== -1 ;
-        })
+    }, this.setDisplayList())   
+}
+setDisplayList = () => {
+    let {liked, movies} = this.state
+    let movieList = this.props.display === 'liked' ? liked : movies
+    this.setState({
+      filtered: movieList.filter(movie => {
+        return movie.title.toLowerCase().indexOf(
+        this.state.query.toLowerCase()) !== -1 ;
       })
-    });   
-  }
-
+    })
+}
   addToLiked = (e) => {
     const {movies, liked} = this.state
     const {id} = e.target
@@ -78,7 +130,7 @@ class App extends Component {
       this.handleLikedBtn(e, 'Like')
     } else {
       const favedObject = movies.filter(movie => movie.id === parseInt(id))
-      this.setState({liked: [...liked, ...favedObject]})
+      this.setState({liked: [...liked, ...favedObject]}, console.log(this.state.liked))
       this.handleLikedBtn(e, 'Liked')
     }
   }
@@ -96,11 +148,11 @@ class App extends Component {
   }
 
   render() {
-    const {liked, error, isLoaded, movies, filtered, query} = this.state
+    const {liked, error, isLoaded, movies, filtered, query, user} = this.state
     return (
       <div className="App">
         <div className="container-fluid">
-          <Navbar query={this.handleSearch} liked={liked}/>
+          <Navbar query={this.handleSearch} handleLogOut={this.handleLogOut} liked={liked} user={user}/>
         </div>
         <div className="container mt-115" id="movies">
         {query !== ''
@@ -115,8 +167,12 @@ class App extends Component {
           ?
           <MovieListRenderer movies={liked} handleFav={this.addToLiked} error={error} isLoaded={isLoaded} />
           :
+          (this.props.display === 'login'
+          ?
+          <Login handleLogIn={this.handleLogIn} handleSignUp={this.handleSignUp}/>
+          :
           <MovieListRenderer movies={movies} handleFav={this.addToLiked} error={error} isLoaded={isLoaded} />
-          ))
+          )))
         }
         </div>
       </div>
