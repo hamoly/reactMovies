@@ -2,7 +2,7 @@ import Firebase from 'firebase';
 
   // Your web app's Firebase configuration
   const firebaseConfig = {
-    apiKey: "AIzaSyC0NDPhtgU7gFAvl3Y6f8zn-HvOivFrwvs",
+    apiKey: `${process.env.REACT_APP_FIREBASE_API_KEY}`,
     authDomain: "reactmovies-1ee6a.firebaseapp.com",
     databaseURL: "https://reactmovies-1ee6a.firebaseio.com",
     projectId: "reactmovies-1ee6a",

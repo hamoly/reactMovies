@@ -3,15 +3,17 @@ import axios from 'axios';
 import MovieListRenderer from './components/movie'
 import Navbar from './components/navbar';
 import ShowMsg from './components/showmsg';
-import Login from './components/login';
+import Login from './components/user/login';
+import UserStateMsg from './components/user/userstatemsg'
 import fire from './config/'
-
 class App extends Component {
   constructor(props) {
     super(props)
     // state
     this.state = {
       user: null,
+      email: '',
+      password: '',
       error : null,
       isLoaded : false,
       movies : [],
@@ -19,6 +21,8 @@ class App extends Component {
       query: '',
       filtered: [],
       pageNumber: 1,
+      userStateMsg: '',
+      userStateClass: ''
     }
   }
 
@@ -27,41 +31,81 @@ class App extends Component {
     this.fetchMovies();
     document.addEventListener('scroll', this.trackScrolling);
   }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.userStateMsg !== this.state.userStateMsg) {
+      this.setStateClass()
+    }
+  }
+
   authLestiner = () => {
     fire.auth().onAuthStateChanged((user) => {
       user ?
         this.setState({
-          user
+          user,
         })
       :
       this.setState({
-        user: null
+        user: null,
       })
     })
   }
-  handleLogIn = () => {
-    const email = document.querySelector('#email').value
-    const password = document.querySelector('#password').value
+
+  setEmailState = (userEmail) => {
+    let email = userEmail.target.value
+    this.setState({email})
+  }
+  setPasswordState =(userPassword) => {
+    let password = userPassword.target.value
+    this.setState({password})
+  }
+  setStateUserForm = (e) => {
+    const {email, password} = this.state
+    e.target.name === 'login' ?
+      this.handleLogIn(email, password)
+    :
+      this.handleSignUp(email, password)
+  }
+  setStateClass = () => {
+    this.setState({
+      userStateClass: 'userStateAnim'
+    })
+      setTimeout(() => {
+          this.setState({
+            userStateClass: ''
+        })
+      }, 2000);
+  }
+  handleLogIn = (email, password) => {
     fire.auth().signInWithEmailAndPassword(email, password)
     .then((user) =>{
       this.setState({
-        user
+        user,
+        userStateMsg:'You are logged in successfully',
       })
     })
     .catch((error) =>{
-      console.log(error.toString())
+      this.setState({
+      userStateMsg:error.toString()
+      })
     })
   }
 
   handleSignUp = () => {
-    const email = document.querySelector('#email').value
-    const password = document.querySelector('#password').value
+    const {email, password} = this.state
     fire.auth().createUserWithEmailAndPassword(email, password)
-    .then((user) =>{
-      fire.auth().signInWithEmailAndPassword(user)
+    .then((user) => {
+      this.setState({
+        user,
+        userStateMsg:'Welcome ... Your account created successfully'
+      })
+    })
+    .then(() =>{
+      this.handleLogIn(email, password)
     })
     .catch((error) =>{
-      console.log(error.toString())
+      this.setState({
+        userStateMsg:error.toString()
+      })
     })
   }
 
@@ -69,8 +113,14 @@ class App extends Component {
     fire.auth().signOut()
     .then(() =>{
       this.setState({
-        user:null
+        user:null,
+        userStateMsg:'You are logged out successfully'
       })
+    })
+    .catch((error) => {
+      this.setState({
+      userStateMsg: error.toString()
+    })
     })
   }
 
@@ -109,17 +159,17 @@ class App extends Component {
     this.setState({
       query: searchInput
     }, this.setDisplayList())   
-}
-setDisplayList = () => {
-    let {liked, movies} = this.state
-    let movieList = this.props.display === 'liked' ? liked : movies
-    this.setState({
-      filtered: movieList.filter(movie => {
-        return movie.title.toLowerCase().indexOf(
-        this.state.query.toLowerCase()) !== -1 ;
+  }
+  setDisplayList = () => {
+      let {liked, movies} = this.state
+      let movieList = this.props.display === 'liked' ? liked : movies
+      this.setState({
+        filtered: movieList.filter(movie => {
+          return movie.title.toLowerCase().indexOf(
+          this.state.query.toLowerCase()) !== -1 ;
+        })
       })
-    })
-}
+  }
   addToLiked = (e) => {
     const {movies, liked} = this.state
     const {id} = e.target
@@ -130,7 +180,7 @@ setDisplayList = () => {
       this.handleLikedBtn(e, 'Like')
     } else {
       const favedObject = movies.filter(movie => movie.id === parseInt(id))
-      this.setState({liked: [...liked, ...favedObject]}, console.log(this.state.liked))
+      this.setState({liked: [...liked, ...favedObject]})
       this.handleLikedBtn(e, 'Liked')
     }
   }
@@ -148,9 +198,10 @@ setDisplayList = () => {
   }
 
   render() {
-    const {liked, error, isLoaded, movies, filtered, query, user} = this.state
+    const {liked, userStateMsg, userStateClass, error, isLoaded, movies, filtered, query, user, userEmail, userPassword} = this.state
     return (
       <div className="App">
+      {userStateMsg !== '' ? <UserStateMsg userStateClass={userStateClass} userStateMsg={userStateMsg} /> : ''}
         <div className="container-fluid">
           <Navbar query={this.handleSearch} handleLogOut={this.handleLogOut} liked={liked} user={user}/>
         </div>
@@ -167,9 +218,11 @@ setDisplayList = () => {
           ?
           <MovieListRenderer movies={liked} handleFav={this.addToLiked} error={error} isLoaded={isLoaded} />
           :
-          (this.props.display === 'login'
+          (this.props.display === 'login' || this.props.display === 'signup'
           ?
-          <Login handleLogIn={this.handleLogIn} handleSignUp={this.handleSignUp}/>
+          <Login display={this.props.display} setStateUserForm={this.setStateUserForm}
+          setEmailState={this.setEmailState} setPasswordState={this.setPasswordState}
+          email={userEmail} password={userPassword} userStateMsg={userStateMsg}/>
           :
           <MovieListRenderer movies={movies} handleFav={this.addToLiked} error={error} isLoaded={isLoaded} />
           )))

@@ -70,3 +70,29 @@
   box-shadow: none !important;
   outline: 0px !important;
 }
+
+.userState{
+  background-color:rgba(0,0,0,0.8);
+  color: #ffc107;
+  position: absolute;
+  z-index: 99999;
+  border-radius: 5px;
+  padding: 10px;
+  min-width: 50%;
+  margin-left: 25%;
+  text-align: center;
+  opacity: 0;
+  margin-top: 50px;
+}
+.userStateAnim {
+  animation-name: userState;
+  animation-duration: 2s;
+  animation-direction: alternate;
+}
+@keyframes userState {
+  0% {opacity: 0;margin-top: 50px;}
+  50% {opacity: 1;margin-top: 0px;}
+  90% {opacity: 1;margin-top: 0px;}
+  100% {opacity: 0;margin-top: -50px;}
+  
+}
