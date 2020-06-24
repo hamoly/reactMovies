@@ -20,17 +20,25 @@ const Navbar = (props) => {
       <li className="nav-item">
         <NavLink exact className="nav-link" to="/">Browse Movies</NavLink>
       </li>
-      <li className="nav-item">
-        <NavLink className="nav-link" to="/liked">Liked Movies<span className="badge badge-danger ml-2">{liked ? liked.length : '0'}</span></NavLink>
-      </li>
-      <li className="nav-item">
-      
-        {user ?
-          <Link className="nav-link" to="/" display="mivoes" onClick={handleLogOut}>Logout</Link>
+      {user ?
+          <>
+          <li className="nav-item">
+          <NavLink className="nav-link" to="/liked">Liked Movies<span className="badge badge-danger ml-2">{liked ? liked.length : '0'}</span></NavLink>
+          </li>
+          <li className="nav-item">
+          <Link className="nav-link" to="/" display="movies" onClick={handleLogOut}>Logout</Link>
+          </li>
+          </>
           :
+          <>
+          <li className="nav-item">
           <Link className="nav-link" to="/login">Login</Link>
+          </li>
+          <li className="nav-item">
+          <Link className="nav-link" to="/signup">Signup</Link>
+          </li>
+          </>
         }
-      </li>
     </ul>
     <Search query={query} value={value} /> 
   </div>

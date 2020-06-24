@@ -19,6 +19,9 @@ ReactDOM.render(
     <Route path="/login">
       <App display='login' />
     </Route>
+    <Route path="/signup">
+    <App display='signup' />
+    </Route>
     </Switch>
   </Router>
   </React.StrictMode>,
