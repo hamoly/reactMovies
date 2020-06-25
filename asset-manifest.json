@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/hamoly.github.io/reactMovies/static/css/main.669279ed.chunk.css",
-    "main.js": "/hamoly.github.io/reactMovies/static/js/main.d50ce1a4.chunk.js",
-    "main.js.map": "/hamoly.github.io/reactMovies/static/js/main.d50ce1a4.chunk.js.map",
-    "runtime-main.js": "/hamoly.github.io/reactMovies/static/js/runtime-main.a11c713d.js",
-    "runtime-main.js.map": "/hamoly.github.io/reactMovies/static/js/runtime-main.a11c713d.js.map",
-    "static/css/2.89f067aa.chunk.css": "/hamoly.github.io/reactMovies/static/css/2.89f067aa.chunk.css",
-    "static/js/2.9efb88cd.chunk.js": "/hamoly.github.io/reactMovies/static/js/2.9efb88cd.chunk.js",
-    "static/js/2.9efb88cd.chunk.js.map": "/hamoly.github.io/reactMovies/static/js/2.9efb88cd.chunk.js.map",
-    "index.html": "/hamoly.github.io/reactMovies/index.html",
-    "precache-manifest.f0824d3adb349527b19eb4c0e2a68d1b.js": "/hamoly.github.io/reactMovies/precache-manifest.f0824d3adb349527b19eb4c0e2a68d1b.js",
-    "service-worker.js": "/hamoly.github.io/reactMovies/service-worker.js",
-    "static/css/2.89f067aa.chunk.css.map": "/hamoly.github.io/reactMovies/static/css/2.89f067aa.chunk.css.map",
-    "static/css/main.669279ed.chunk.css.map": "/hamoly.github.io/reactMovies/static/css/main.669279ed.chunk.css.map",
-    "static/js/2.9efb88cd.chunk.js.LICENSE.txt": "/hamoly.github.io/reactMovies/static/js/2.9efb88cd.chunk.js.LICENSE.txt",
-    "static/media/custom.css": "/hamoly.github.io/reactMovies/static/media/remove.9693a740.svg",
-    "static/media/movie-poster-na.6fafb80a.jpg": "/hamoly.github.io/reactMovies/static/media/movie-poster-na.6fafb80a.6fafb80a.jpg"
+    "main.css": "/reactMovies/static/css/main.95638ea3.chunk.css",
+    "main.js": "/reactMovies/static/js/main.c1a5ad1e.chunk.js",
+    "main.js.map": "/reactMovies/static/js/main.c1a5ad1e.chunk.js.map",
+    "runtime-main.js": "/reactMovies/static/js/runtime-main.cbed502e.js",
+    "runtime-main.js.map": "/reactMovies/static/js/runtime-main.cbed502e.js.map",
+    "static/css/2.89f067aa.chunk.css": "/reactMovies/static/css/2.89f067aa.chunk.css",
+    "static/js/2.ff7919e5.chunk.js": "/reactMovies/static/js/2.ff7919e5.chunk.js",
+    "static/js/2.ff7919e5.chunk.js.map": "/reactMovies/static/js/2.ff7919e5.chunk.js.map",
+    "index.html": "/reactMovies/index.html",
+    "precache-manifest.d4e70cbb96b7a01e38fb051420cd1cb4.js": "/reactMovies/precache-manifest.d4e70cbb96b7a01e38fb051420cd1cb4.js",
+    "service-worker.js": "/reactMovies/service-worker.js",
+    "static/css/2.89f067aa.chunk.css.map": "/reactMovies/static/css/2.89f067aa.chunk.css.map",
+    "static/css/main.95638ea3.chunk.css.map": "/reactMovies/static/css/main.95638ea3.chunk.css.map",
+    "static/js/2.ff7919e5.chunk.js.LICENSE.txt": "/reactMovies/static/js/2.ff7919e5.chunk.js.LICENSE.txt",
+    "static/media/custom.css": "/reactMovies/static/media/remove.9693a740.svg",
+    "static/media/movie-poster-na.6fafb80a.jpg": "/reactMovies/static/media/movie-poster-na.6fafb80a.6fafb80a.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.a11c713d.js",
+    "static/js/runtime-main.cbed502e.js",
     "static/css/2.89f067aa.chunk.css",
-    "static/js/2.9efb88cd.chunk.js",
-    "static/css/main.669279ed.chunk.css",
-    "static/js/main.d50ce1a4.chunk.js"
+    "static/js/2.ff7919e5.chunk.js",
+    "static/css/main.95638ea3.chunk.css",
+    "static/js/main.c1a5ad1e.chunk.js"
   ]
 }
