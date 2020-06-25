@@ -8,7 +8,7 @@ const Movie = (props) => {
     let {movie, handleFav, user, likedMovieState} = props
     return (
         movie.map(({id, poster_path, title, release_date, overview, popularity, vote_count} = {}) => (
-            <div className="row shadow mb-4" key={id}>
+            <div className="row shadow m-4" key={id}>
                 <div className="col-sm-3 p-0 ">
                 <LazyImage src={`https://image.tmdb.org/t/p/w440_and_h660_face${poster_path}`} alt={title} />
                 </div>

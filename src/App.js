@@ -348,8 +348,7 @@ class App extends Component {
       {userStateMsg !== '' ? <UserStateMsg userStateClass={userStateClass} userStateMsg={userStateMsg} /> : ''}
         <div className="container-fluid">
           <Navbar query={this.handleSearch} search={query} handleLogOut={this.handleLogOut} liked={liked} user={user}/>
-        </div>
-        <div className="container mt-115" id="movies">
+        <div className="mt-115" id="movies">
           {display === 'login' || display === 'signup'
           ?
           <Login display={display} setStateUserForm={this.setStateUserForm}
@@ -363,6 +362,7 @@ class App extends Component {
           <MovieListRenderer displayLikedList={this.displayLikedList} display={display} likedMovieState={this.likedMovieState} user={user} movies={renderedMovieList} handleFav={this.addToLiked} error={error} isLoaded={isLoaded} />
           )
         }
+        </div>
         </div>
       </div>
       )
