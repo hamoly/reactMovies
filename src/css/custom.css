@@ -96,3 +96,28 @@
   100% {opacity: 0;margin-top: -50px;}
   
 }
+.share {
+  position: fixed;
+  z-index: 9999;
+  left: -220px;
+  background-color: dimgrey;
+  border-radius:  0 20px 20px 0;
+  padding: 10px;
+  width: 300px;
+}
+.share:hover {
+transform: translatex(220px);
+transition: transform .2s ease-out;
+}
+
+.imgLoaded {
+  animation: loaded 1.5s ease-in-out;
+}
+@keyframes loaded {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}

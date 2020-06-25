@@ -1,5 +1,6 @@
 import React from 'react';
 import Logo from '../../logo'
+import Button from '../../button'
 import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faKey } from '@fortawesome/free-solid-svg-icons'
@@ -50,13 +51,11 @@ const Login = (props) => {
                         <div className="d-flex justify-content-center mt-3 login_container">
                             {display === 'login'
                             ?
-                                <button onClick={e => setStateUserForm(e)} type="submit" display="movies" name="login" className="btn btn-danger login_btn">
-                                Login
-                                </button>
+                                <Button onClick={e => setStateUserForm(e)} display="movies" name="Login">
+                                </Button>
                             :
-                                <button  onClick={e => setStateUserForm(e)} type="submit" name="signup" className="btn btn-danger login_btn">
-                                Sign-up
-                                </button>
+                                <Button onClick={e => setStateUserForm(e)} name="Sign-up">
+                                </Button>
                             }
                         </div>
                         {renderRedirect()}

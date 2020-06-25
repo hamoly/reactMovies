@@ -1,12 +1,14 @@
 import React from 'react';
 
-const MovieFavBtn = (props) => {
-    const {handleFav, id} = props
+
+
+const LikeBtn = (props) => {
+    const {handleFav, id, text, className} = props
     return (
-    <button className="btn p-2 m-2 btn-secondary add" id={id} onClick={e => handleFav(e)}>
-     Like
+    <button className={className} id={id} onClick={e => handleFav(e)}>
+     {text}
     </button>
     )
 }
 
-export default MovieFavBtn;
+export default LikeBtn;
