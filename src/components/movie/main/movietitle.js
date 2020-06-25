@@ -1,7 +1,5 @@
-const Movietitle = ({movietitle}) => {
-return (
-    `${movietitle} `
-    )
-}
+const Movietitle = ({ movietitle }) => {
+	return `${movietitle} `;
+};
 
 export default Movietitle;
