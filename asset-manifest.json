@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/static/css/main.dd99427f.chunk.css",
-    "main.js": "/static/js/main.4711a939.chunk.js",
-    "main.js.map": "/static/js/main.4711a939.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.29853747.js",
-    "runtime-main.js.map": "/static/js/runtime-main.29853747.js.map",
-    "static/css/2.89f067aa.chunk.css": "/static/css/2.89f067aa.chunk.css",
-    "static/js/2.419f4413.chunk.js": "/static/js/2.419f4413.chunk.js",
-    "static/js/2.419f4413.chunk.js.map": "/static/js/2.419f4413.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.96effa0aa05a5f62d6d9342142e70c5c.js": "/precache-manifest.96effa0aa05a5f62d6d9342142e70c5c.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/2.89f067aa.chunk.css.map": "/static/css/2.89f067aa.chunk.css.map",
-    "static/css/main.dd99427f.chunk.css.map": "/static/css/main.dd99427f.chunk.css.map",
-    "static/js/2.419f4413.chunk.js.LICENSE.txt": "/static/js/2.419f4413.chunk.js.LICENSE.txt",
-    "static/media/custom.css": "/static/media/remove.9693a740.svg",
-    "static/media/movie-poster-na.6fafb80a.jpg": "/static/media/movie-poster-na.6fafb80a.6fafb80a.jpg"
+    "main.css": "/reactMovies/static/css/main.95638ea3.chunk.css",
+    "main.js": "/reactMovies/static/js/main.6d285ea0.chunk.js",
+    "main.js.map": "/reactMovies/static/js/main.6d285ea0.chunk.js.map",
+    "runtime-main.js": "/reactMovies/static/js/runtime-main.cbed502e.js",
+    "runtime-main.js.map": "/reactMovies/static/js/runtime-main.cbed502e.js.map",
+    "static/css/2.89f067aa.chunk.css": "/reactMovies/static/css/2.89f067aa.chunk.css",
+    "static/js/2.873a77e9.chunk.js": "/reactMovies/static/js/2.873a77e9.chunk.js",
+    "static/js/2.873a77e9.chunk.js.map": "/reactMovies/static/js/2.873a77e9.chunk.js.map",
+    "index.html": "/reactMovies/index.html",
+    "precache-manifest.09e5211b405b54f439898eb941e2a48b.js": "/reactMovies/precache-manifest.09e5211b405b54f439898eb941e2a48b.js",
+    "service-worker.js": "/reactMovies/service-worker.js",
+    "static/css/2.89f067aa.chunk.css.map": "/reactMovies/static/css/2.89f067aa.chunk.css.map",
+    "static/css/main.95638ea3.chunk.css.map": "/reactMovies/static/css/main.95638ea3.chunk.css.map",
+    "static/js/2.873a77e9.chunk.js.LICENSE.txt": "/reactMovies/static/js/2.873a77e9.chunk.js.LICENSE.txt",
+    "static/media/custom.css": "/reactMovies/static/media/remove.9693a740.svg",
+    "static/media/movie-poster-na.6fafb80a.jpg": "/reactMovies/static/media/movie-poster-na.6fafb80a.6fafb80a.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.29853747.js",
+    "static/js/runtime-main.cbed502e.js",
     "static/css/2.89f067aa.chunk.css",
-    "static/js/2.419f4413.chunk.js",
-    "static/css/main.dd99427f.chunk.css",
-    "static/js/main.4711a939.chunk.js"
+    "static/js/2.873a77e9.chunk.js",
+    "static/css/main.95638ea3.chunk.css",
+    "static/js/main.6d285ea0.chunk.js"
   ]
 }
