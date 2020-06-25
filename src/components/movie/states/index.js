@@ -1,12 +1,18 @@
 import React from 'react';
-import MoviePopularity from './moviepopularity';
-import MovieVoteCount from './movievotecount';
+import MovieStatesLabel from './moviestateslabel';
+import { faFireAlt } from '@fortawesome/free-solid-svg-icons'
+import { faStar } from '@fortawesome/free-solid-svg-icons'
 
 const MovieStates = ({MoviePopularityVal, MovieVoteCountVal}) => {
 return (
     <>
-    <MoviePopularity MoviePopularity= {MoviePopularityVal} />
-    <MovieVoteCount MovieVoteCount={MovieVoteCountVal} />
+    <MovieStatesLabel
+    icon={faFireAlt}
+    inner={`Popularity ${MoviePopularityVal}`}/>
+
+    <MovieStatesLabel
+    icon={faStar}
+    inner={`Vote Count ${MovieVoteCountVal}`}/>
     </>
     )
 }

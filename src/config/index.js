@@ -11,5 +11,6 @@ import Firebase from 'firebase';
     appId: "1:1055602690991:web:e421e43f85d6a0b521fd5a"
   };
   // Initialize Firebase
-  const fire = Firebase.initializeApp(firebaseConfig);
-  export default fire
+  export const fire = Firebase.initializeApp(firebaseConfig);
+  
+  export const db = fire.firestore();
